@@ -8,6 +8,8 @@ from card import Card, CardName, CardType
 from card_deck import CardDeck
 from glass_counter import GlassCounter
 from exceptions import GlassPurchaseException, CardUsageException, PlayerIndexError, NoSuchActionException
+from hero import HeroName
+from hero_ability import HeroAbility
 
 
 class Action(ABC):
@@ -34,12 +36,15 @@ class Action(ABC):
 
 class SellSpritzer(Action):
 
-    def __init__(self, player: Player, glass: Glass) -> None:
+    def __init__(self, player: Player, glass: Glass, glass_counter: GlassCounter) -> None:
         super().__init__(player)
         self.glass = glass
+        self.glass_counter = glass_counter
 
     def execute(self) -> None:
         self.player.sell_glass(self.glass)
+        if self.player.hero == HeroName.MELYIVO_FRED:
+            HeroAbility.melyivo_fred(self.player, self.glass, self.glass_counter)
 
 
 class DrawCards(Action):

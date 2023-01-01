@@ -77,7 +77,7 @@ class Game:
             if len(sellable_glasses) == 0:
                 raise ActionException("None of your glasses are full. You can't sell any!")
             target_glass_index = UserInput.ask_to_select("Which glass would you like to sell?", options=list(map(str, sellable_glasses)), return_index=True)
-            action_instance = SellSpritzer(player=player, glass=player.get_glass(target_glass_index))
+            action_instance = SellSpritzer(player=player, glass=player.get_glass(target_glass_index), glass_counter=self.glass_counter)
         elif action == DrawCards:
             action_instance = DrawCards(player=player, deck=self.card_deck)
         elif action == PurchaseGlasses:
