@@ -8,6 +8,7 @@ from action import Action, SellSpritzer, DrawCards, PurchaseGlasses, UseCards, C
 from exceptions import ActionException, CardUsageException, GameException, GlassIndexException
 from card import CardType, CardName
 from user_input_handler import UserInput
+from hero import HeroManager
        
 
 class Game:
@@ -32,6 +33,7 @@ class Game:
                 
     def _create_players(self) -> None:
         self.number_of_players = UserInput.ask_for_integer("Please enter how many players will play the game.", min=2, max=6)
+        hero_manager = HeroManager(player_count=self.number_of_players)
         registered_names = []
         i = 1
         while self.number_of_players != len(self.players):
@@ -39,7 +41,7 @@ class Game:
             if name in registered_names:
                 print("There is already a player registered with this name!")
                 continue
-            player = Player(id=i, name=name)
+            player = Player(id=i, name=name, hero=hero_manager.select_random_hero())
             for _ in range(5):
                 player.draw_card(self.card_deck.draw())
             player.add_money(20)

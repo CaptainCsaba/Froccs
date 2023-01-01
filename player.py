@@ -3,6 +3,7 @@ from operator import attrgetter
 from exceptions import NotEnoughMoneyException, MaximumGlassCountReached, GlassIndexException, NoSuchCardException
 from card import Card, CardName
 from glass import Glass
+from hero import HeroName
 
 class Player:
 
@@ -10,11 +11,13 @@ class Player:
     money: int
     cards: list[Card]
     glasses: list[Glass]
+    hero: HeroName
 
-    def __init__(self, id: int, name: str) -> None:
+    def __init__(self, id: int, name: str, hero: HeroName) -> None:
         self.id = id
         self.index = id - 1
         self.name = name
+        self.hero = hero
         self.cards = []
         self.money = 0
         self.glasses = []
